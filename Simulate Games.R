@@ -1,21 +1,11 @@
+library(ggplot2)
 
-Monty_Hall<-function(){
-  prize <<-sample(1:3,1)
-  if (prize == 1){
-  door <<- c("car","goat","goat")
-} else if (prize == 2){
-  door <<- c("goat","car","goat")
-} else{
-  door <<- c("goat","goat","car")
-}
-}
-
-ifelse((Orig_Choice == prize), Wins <- Wins + 1, Loss <- Loss + 1)
-ifelse((New_Choice == prize), Wins <- Wins + 1, Loss <- Loss + 1)
 Play_Game <- function(n = 1,stick = TRUE){ #n is number of simulation and stick to your choice
   Wins <- 0
   Loss <- 0
+  output <<-matrix(ncol=2, nrow =n)
   for (i in 1:n){
+    
     Orig_Choice <- sample(1:3,1) #Select a door
     z <- 1:3
     prize <-sample(1:3,1) #hide the car behind the door
@@ -38,6 +28,9 @@ Play_Game <- function(n = 1,stick = TRUE){ #n is number of simulation and stick 
     }else{
       Loss <- Loss +1
     }
+    output[i,] <<- c(i, Wins/n)
+    output <<- data.frame(output)
+    names(output)<<-c('games','wins')
 
     
   }
@@ -45,9 +38,12 @@ Play_Game <- function(n = 1,stick = TRUE){ #n is number of simulation and stick 
 
 }
 
-plot(1:10);for(i in 1:10){points(10-i,i);Sys.sleep(1)}
 
 
-Play_Game(n = 100,stick = TRUE)
+Play_Game(n = 1000,stick = TRUE)
 
-z[-c(1,1)]
+library(ggplot2)
+names(output)<-c('games','wins')
+ggplot(data=output, aes(x=games, y=wins)) +
+  geom_line()+
+  geom_point()
