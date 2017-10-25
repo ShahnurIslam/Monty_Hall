@@ -1,9 +1,9 @@
 
 Monty_Hall<-function(){
-  x <-sample(1:3,1)
-  if (x == 1){
+  prize <<-sample(1:3,1)
+  if (prize == 1){
   door <<- c("car","goat","goat")
-} else if (x == 2){
+} else if (prize == 2){
   door <<- c("goat","car","goat")
 } else{
   door <<- c("goat","goat","car")
@@ -11,12 +11,13 @@ Monty_Hall<-function(){
 }
 
 Monty_Hall()
-
+#Add a reveal, that's why it isn't working!
 Play_Game <- function(n = 1,stick = TRUE){ #n is number of simulation and stick to your choice
   Wins <<- 0
   Loss <<- 0
   for (i in 1:n){
       Orig_Choice <- sample(1:3,1)
+      
       z <- c(1,2,3)
       z <- z[z!=Orig_Choice]
       New_Choice <- z[sample(1:2,1)]
@@ -27,8 +28,16 @@ Play_Game <- function(n = 1,stick = TRUE){ #n is number of simulation and stick 
         ifelse((door[New_Choice] == "car"), Wins <- Wins +1, Loss <- Loss +1)
       }
   }
-  return(paste("Wins:", Wins/n))
+  return(paste("Wins:", Wins))
   }
  
-Play_Game(n = 1, stick = FALSE)
+Play_Game(n = 10, stick = FALSE)
 
+Orig_Choice <- sample(1:3,1)
+z <- c(1,2,3)
+z <- z[z!=Orig_Choice]
+New_Choice <- z[sample(1:2,1)]
+Orig_Choice
+New_Choice
+
+ifelse((door[New_Choice] == "car"), print(1), Loss <- Loss +1)
